@@ -28,6 +28,12 @@ Each line includes:
 * **HTTP response code**
 * **Bytes transferred**
 
+The sample log file is stored in the `data/` directory:
+
+```
+data/access_log_sample.txt
+```
+
 ---
 
 ## 🔍 Features
@@ -71,7 +77,7 @@ uv pip install -r requirements.txt
 Execute the log parser with PySpark to display the parsed fields:
 
 ```bash
-python parse_logs_spark.py access_log_sample.txt
+python scripts/parse_logs_spark.py data/access_log_sample.txt
 ```
 
 ## Running the Unit Tests
