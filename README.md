@@ -51,3 +51,28 @@ Each line includes:
 
   * Request peaks
   * Time-series analysis
+
+## Installation
+
+Install the required Python packages using pip:
+
+```bash
+pip install -r requirements.txt
+```
+
+## Running the Parser
+
+Execute the log parser with PySpark to display the parsed fields:
+
+```bash
+python parse_logs_spark.py access_log_sample.txt
+```
+
+## Running the Unit Tests
+
+After installing the dependencies, run the test suite with:
+
+```bash
+pytest
+```
+
