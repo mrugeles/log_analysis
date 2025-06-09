@@ -1,29 +1,33 @@
 import sys
-from pyspark.sql import SparkSession
 from pyspark.sql.functions import regexp_extract
-
-# Input file path can be passed as first command line argument
-log_file = sys.argv[1] if len(sys.argv) > 1 else 'access_log_sample.txt'
-
-spark = SparkSession.builder.appName('LogParser').getOrCreate()
+from spark_utils import create_spark_session
 
 # Regular expression pattern for CLF
-pattern = r'^(\S+) (\S+) (\S+) \[([^\]]+)\] "([^"]*)" (\d{3}) (\S+)' 
+PATTERN = r'^(\S+) (\S+) (\S+) \[([^\]]+)\] "([^"]*)" (\d{3}) (\S+)'
 
-# Read the log file as text
-lines_df = spark.read.text(log_file)
 
-# Extract fields using regexp_extract
-logs_df = lines_df.select(
-    regexp_extract('value', pattern, 1).alias('client_ip'),
-    regexp_extract('value', pattern, 2).alias('client_identity'),
-    regexp_extract('value', pattern, 3).alias('client_username'),
-    regexp_extract('value', pattern, 4).alias('datetime'),
-    regexp_extract('value', pattern, 5).alias('request'),
-    regexp_extract('value', pattern, 6).alias('status_code'),
-    regexp_extract('value', pattern, 7).alias('size')
-)
+def parse_logs(spark, log_file):
+    """Return a DataFrame with parsed log fields."""
+    lines_df = spark.read.text(log_file)
+    return lines_df.select(
+        regexp_extract('value', PATTERN, 1).alias('client_ip'),
+        regexp_extract('value', PATTERN, 2).alias('client_identity'),
+        regexp_extract('value', PATTERN, 3).alias('client_username'),
+        regexp_extract('value', PATTERN, 4).alias('datetime'),
+        regexp_extract('value', PATTERN, 5).alias('request'),
+        regexp_extract('value', PATTERN, 6).alias('status_code'),
+        regexp_extract('value', PATTERN, 7).alias('size'),
+    )
 
-logs_df.show(truncate=False)
 
-spark.stop()
+def main(argv=None):
+    argv = argv or sys.argv[1:]
+    log_file = argv[0] if argv else 'access_log_sample.txt'
+    spark = create_spark_session('LogParser')
+    logs_df = parse_logs(spark, log_file)
+    logs_df.show(truncate=False)
+    spark.stop()
+
+
+if __name__ == "__main__":
+    main()
