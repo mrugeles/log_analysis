@@ -28,6 +28,12 @@ Each line includes:
 * **HTTP response code**
 * **Bytes transferred**
 
+The sample log file is stored in the `data/` directory:
+
+```
+data/access_log_sample.txt
+```
+
 ---
 
 ## 🔍 Features
@@ -51,3 +57,34 @@ Each line includes:
 
   * Request peaks
   * Time-series analysis
+
+## Installation
+
+Create a Python virtual environment using [uv](https://github.com/astral-sh/uv) a
+nd install the dependencies:
+
+```bash
+# create and activate the environment
+uv venv .venv
+source .venv/bin/activate
+
+# install packages
+uv pip install -r requirements.txt
+```
+
+## Running the Parser
+
+Execute the log parser with PySpark to display the parsed fields:
+
+```bash
+python scripts/parse_logs_spark.py data/access_log_sample.txt
+```
+
+## Running the Unit Tests
+
+After installing the dependencies, run the test suite with:
+
+```bash
+pytest
+```
+
