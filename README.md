@@ -54,10 +54,16 @@ Each line includes:
 
 ## Installation
 
-Install the required Python packages using pip:
+Create a Python virtual environment using [uv](https://github.com/astral-sh/uv) a
+nd install the dependencies:
 
 ```bash
-pip install -r requirements.txt
+# create and activate the environment
+uv venv .venv
+source .venv/bin/activate
+
+# install packages
+uv pip install -r requirements.txt
 ```
 
 ## Running the Parser
