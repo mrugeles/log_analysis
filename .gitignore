@@ -1,0 +1,5 @@
+# Ignore Python cache directories and files
+.idea
+__pycache__/
+**/__pycache__/
+*.py[cod]
