@@ -74,11 +74,15 @@ uv pip install -r requirements.txt
 
 ## Running the Parser
 
-Execute the log parser with PySpark to display the parsed fields:
+Execute the log parser with PySpark to parse the log file and write the
+results to a Parquet file:
 
 ```bash
-python scripts/parse_logs_spark.py data/access_log_sample.txt
+python scripts/parse_logs_spark.py data/access_log_sample.txt parsed_logs.parquet
 ```
+
+If the output path is omitted, the file `parsed_logs.parquet` is created in the
+current directory.
 
 ## Running the Unit Tests
 
